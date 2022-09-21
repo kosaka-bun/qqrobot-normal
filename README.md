@@ -7,7 +7,7 @@
 [![Release](https://img.shields.io/github/release/kosaka-bun/qqrobot-normal?label=Release&logo=GitHub)](../../releases)
 
 ## 前言
-本项目是一个简单的群聊互动机器人，用户可以通过浇水操作提升经验值和等级。
+本项目是一个简单的群聊互动机器人，用户可以通过浇水操作提升经验值和等级。<br />
 浇水有概率获得各种各样的道具，它们有各种各样的效果，可以对自己或他人使用，以影响自己或他人的经验值或道具仓库。
 
 本项目采用AGPL-3.0 License，其要求：
