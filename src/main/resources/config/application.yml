@@ -1,0 +1,57 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /qqrobot-normal
+
+honoka:
+  qqrobot:
+    command-prefix: '&'
+
+spring:
+  profiles:
+    # 默认生效dev环境
+    active: dev
+  application:
+    name: qqrobot-farm
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    # region druid详细配置
+    druid:
+      # 初始化时建立物理连接的个数 池子里面有5个
+      initial-size: 5
+      # 最大连接池数量
+      max-active: 20
+      # 最小连接池数量
+      min-idle: 5
+      # 获取连接时最大等待时间，单位毫秒 timeout链接超时
+      max-wait: 10000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒  检测非核心链接的时间
+      # 既作为检测的间隔时间又作为testWhileIdel执行的依据
+      time-between-eviction-runs-millis: 60000
+      # 连接保持空闲而不被驱逐的最小时间
+      min-evictable-idle-time-millis: 300000
+      # 用来检测连接是否有效的sql，要求是一个查询语句
+      # 8小时问题 8个小时没跟mysql通信mysql会主动关闭该链接
+      validation-query: select 1 from dual
+      # 如果空闲时间大于min-evictable-idle-time-millis，执行validationQuery检测连接是否有效。
+      # 建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测
+      test-while-idle: true
+      # 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+      test-on-borrow: false
+      # 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+      test-on-return: false
+      # 是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，
+      # 比如说oracle。在mysql下建议关闭。不是mysql端，链接端，select * from student 查询缓存
+      pool-prepared-statements: true
+      # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。
+      max-pool-prepared-statement-per-connection-size: 50
+    # endregion
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/*.xml

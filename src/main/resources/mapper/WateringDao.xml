@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.honoka.qqrobot.normal.dao.WateringDao">
+  <sql id="Base_Column_List">
+    qq, `level`, now_exp, last_time_watering, next_time_watering
+  </sql>
+  <select id="searchWateringRank" resultType="de.honoka.qqrobot.normal.entity.Watering">
+    select <include refid="Base_Column_List" /> from watering
+    order by `level` desc, now_exp desc limit #{limit}
+  </select>
+  <select id="findAndLock" resultType="de.honoka.qqrobot.normal.entity.Watering">
+    select <include refid="Base_Column_List" /> from watering
+    where qq = #{qq} for update
+  </select>
+</mapper>

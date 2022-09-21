@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.honoka.qqrobot.normal.dao.ItemRecordDao">
+  <sql id="Base_Column_List">
+    qq, item_name, `count`
+  </sql>
+  <update id="update" parameterType="de.honoka.qqrobot.normal.entity.ItemRecord">
+    update item_record
+    set `count` = #{count,jdbcType=INTEGER}
+    where qq = #{qq,jdbcType=BIGINT}
+        and item_name = #{itemName,jdbcType=VARCHAR}
+  </update>
+  <select id="findAndLock" resultType="de.honoka.qqrobot.normal.entity.ItemRecord">
+    select <include refid="Base_Column_List" /> from item_record
+    where qq = #{qq} and item_name = #{itemName}
+  </select>
+  <select id="getAvaliableItemsOfUser" resultType="de.honoka.qqrobot.normal.entity.ItemRecord">
+    select <include refid="Base_Column_List" /> from item_record
+    where qq = #{qq} and `count` > 0 order by `count` desc
+    <if test="lock"> for update </if>
+  </select>
+</mapper>

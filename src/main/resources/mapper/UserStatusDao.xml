@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="de.honoka.qqrobot.normal.dao.UserStatusDao">
+  <sql id="Base_Column_List">
+    id, from_qq, qq, `status`, `time`, from_group
+  </sql>
+  <delete id="clear">
+    delete from user_status
+  </delete>
+  <select id="getLastInsertId" resultType="java.lang.Integer">
+    select last_insert_id();
+  </select>
+  <select id="findLatest" resultType="de.honoka.qqrobot.normal.entity.UserStatus">
+    select <include refid="Base_Column_List" /> from user_status
+    where qq = #{qq} order by `time` desc limit 1
+  </select>
+</mapper>

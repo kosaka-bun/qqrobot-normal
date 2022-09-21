@@ -1,0 +1,10 @@
+.idea/
+target/
+cache/
+generate/
+
+build/
+.gradle/
+
+/src/main/resources/qqrobot/mirai/deviceInfo.json
+/src/main/resources/config/application-prod.yml
