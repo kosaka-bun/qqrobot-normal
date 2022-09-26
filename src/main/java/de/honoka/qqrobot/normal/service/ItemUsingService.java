@@ -8,8 +8,8 @@ import de.honoka.qqrobot.normal.entity.ItemRecord;
 import de.honoka.qqrobot.normal.entity.UserStatus;
 import de.honoka.qqrobot.normal.entity.Watering;
 import de.honoka.qqrobot.normal.util.EmojiUtils;
-import de.honoka.qqrobot.starter.common.RobotBeanHolder;
 import de.honoka.sdk.util.code.CodeUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -40,7 +40,6 @@ public class ItemUsingService {
             removedItemNames.append(itemService.toEmojiItemName(item.getItemName()));
             if(item.getCount() <= 0) itemListCopy.remove(item);
         }
-        Framework<?> framework = robotBeanHolder.getFramework();
         if(removedCount > 0) {
             //更新道具记录
             for(ItemRecord itemRecord : itemList) {
@@ -92,8 +91,7 @@ public class ItemUsingService {
     //使用柠檬
     @Item(name = "柠檬", emojiNameUnicode = 127819)
     public String useLemon(long fromQQ, long targetQQ, long group) {
-        String username = robotBeanHolder.getFramework().getNickOrCard(
-                group, targetQQ);
+        String username = framework.getNickOrCard(group, targetQQ);
         UserStatus latestStatus = userStatusDao.findLatest(targetQQ);
         if(latestStatus != null) {
             TimerTask task = statusTaskMap.get(latestStatus.getId());
@@ -110,8 +108,7 @@ public class ItemUsingService {
     //使用放大镜
     @Item(name = "放大镜", emojiNameUnicode = 128269)
     public String useMagnifier(long fromQQ, long targetQQ, long group) {
-        String username = robotBeanHolder.getFramework().getNickOrCard(
-                group, targetQQ);
+        String username = framework.getNickOrCard(group, targetQQ);
         List<ItemRecord> list = itemRecordDao.getAvaliableItemsOfUser(
                 targetQQ, false);
         if(list.size() <= 0) return username + "还没有道具";
@@ -176,11 +173,11 @@ public class ItemUsingService {
         wateringDao.updateById(from);
         wateringDao.updateById(target);
         return "使用成功，你获得了" + exp + "点经验，" +
-                robotBeanHolder.getFramework().getNickOrCard(group, targetQQ) +
+                framework.getNickOrCard(group, targetQQ) +
                 "获得了" + (exp*2) + "点经验\n" +
                 "你目前的等级和经验为：\n" + "Lv" + from.getLevel() + " (" +
                 from.getNowExp() + "/" + (from.getLevel() * 100) + ")\n" +
-                robotBeanHolder.getFramework().getNickOrCard(group, targetQQ) +
+                framework.getNickOrCard(group, targetQQ) +
                 "目前的等级和经验为：\n" + "Lv" + target.getLevel() + " (" +
                 target.getNowExp() + "/" + (target.getLevel() * 100) + ")";
     }
@@ -223,10 +220,9 @@ public class ItemUsingService {
         //保存数据
         itemRecordDao.update(ir1);
         itemRecordDao.update(ir2);
-        return "使用成功，" + robotBeanHolder.getFramework()
-                .getNickOrCard(group, targetQQ) + "获得了一个" +
-                itemService.toEmojiItemName(itemName1) + "和一个" +
-                itemService.toEmojiItemName(itemName2);
+        return "使用成功，" + framework.getNickOrCard(group, targetQQ) +
+                "获得了一个" + itemService.toEmojiItemName(itemName1) +
+                "和一个" + itemService.toEmojiItemName(itemName2);
     }
 
     //使用白色果实
@@ -255,7 +251,7 @@ public class ItemUsingService {
         List<ItemRecord> targets = itemRecordDao.getAvaliableItemsOfUser(
                 targetQQ, false);
         if(targets.size() <= 0) {
-            return robotBeanHolder.getFramework().getNickOrCard(group, targetQQ) +
+            return framework.getNickOrCard(group, targetQQ) +
                     "没有道具，你没有获得任何道具";
         }
         Random ra = new Random();
@@ -277,9 +273,8 @@ public class ItemUsingService {
         //存入数据库
         itemRecordDao.update(target);
         itemRecordDao.update(from);
-        return "使用成功，你获得了" + robotBeanHolder.getFramework().getNickOrCard(
-                group, targetQQ) + "的一个" + itemService.toEmojiItemName(
-                        target.getItemName());
+        return "使用成功，你获得了" + framework.getNickOrCard(group, targetQQ) +
+                "的一个" + itemService.toEmojiItemName(target.getItemName());
     }
 
     //使用红色果实
@@ -312,8 +307,8 @@ public class ItemUsingService {
         }
         //存入数据库
         wateringDao.updateById(w);
-        return "使用成功，" + robotBeanHolder.getFramework().getNickOrCard(
-                group, w.getQq()) + "现在还需要" + time + "才能浇水";
+        return "使用成功，" + framework.getNickOrCard(group, w.getQq()) +
+                "现在还需要" + time + "才能浇水";
     }
 
     //使用绿色果实
@@ -327,10 +322,10 @@ public class ItemUsingService {
         w.setNowExp(w.getNowExp() - minusExp);
         //存入数据库
         wateringDao.updateById(w);
-        return "使用成功，" + robotBeanHolder.getFramework().getNickOrCard(
-                group, w.getQq()) + "扣除了" + minusExp + "点经验，" +
-                "目前的等级和经验为：\nLv" + w.getLevel() + " (" + w.getNowExp() +
-                "/" + (w.getLevel() * 100) + ")";
+        return "使用成功，" + framework.getNickOrCard(group, w.getQq()) +
+                "扣除了" + minusExp + "点经验，目前的等级和经验为：\nLv" +
+                w.getLevel() + " (" + w.getNowExp() + "/" +
+                (w.getLevel() * 100) + ")";
     }
 
     //使用橙色果实
@@ -340,7 +335,7 @@ public class ItemUsingService {
         w.setNextTimeWatering(new Date());	//现在即是下次可浇水的时间
         //存入数据库
         wateringDao.updateById(w);
-        return "使用成功，" + robotBeanHolder.getFramework().getNickOrCard(
+        return "使用成功，" + framework.getNickOrCard(
                 group, w.getQq()) + "的浇水等待时间已刷新";
     }
 
@@ -380,8 +375,9 @@ public class ItemUsingService {
     @Resource
     private ItemService itemService;
 
+    @Lazy
     @Resource
-    private RobotBeanHolder robotBeanHolder;
+    private Framework<?> framework;
 
     @Resource
     private WateringDao wateringDao;

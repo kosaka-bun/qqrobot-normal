@@ -1,8 +1,9 @@
 package de.honoka.qqrobot.normal.service;
 
+import de.honoka.qqrobot.framework.Framework;
 import de.honoka.qqrobot.normal.dao.WateringDao;
 import de.honoka.qqrobot.normal.entity.Watering;
-import de.honoka.qqrobot.starter.common.RobotBeanHolder;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -142,8 +143,8 @@ public class WateringService {
         info.append("目前等级最高的前").append(num).append("名是：");
         for(int i = 0; i < list.size(); i++) {
             Watering w = list.get(i);
-            info.append("\n").append(i + 1).append(".").append(robotBeanHolder
-                            .getFramework().getNickOrCard(group, w.getQq()))
+            info.append("\n").append(i + 1).append(".")
+                    .append(framework.getNickOrCard(group, w.getQq()))
                     .append(" Lv").append(w.getLevel()).append(" (")
                     .append(w.getNowExp()).append("/").append(w.getLevel() * 100)
                     .append(")");
@@ -162,11 +163,11 @@ public class WateringService {
         Watering w = wateringDao.selectById(qq);
         //如果已有信息
         if(w != null) {
-            return robotBeanHolder.getFramework().getNickOrCard(group, qq) +
-                    "的等级：Lv" + w.getLevel() + " (" + w.getNowExp() + "/" +
+            return framework.getNickOrCard(group, qq) + "的等级：Lv" +
+                    w.getLevel() + " (" + w.getNowExp() + "/" +
                     (w.getLevel() * 100) + ")";
         } else {
-            return robotBeanHolder.getFramework().getNickOrCard(group, qq) +
+            return framework.getNickOrCard(group, qq) +
                     "还没有浇过水";
         }
     }
@@ -179,8 +180,9 @@ public class WateringService {
     @Resource
     private WateringDao wateringDao;
 
+    @Lazy
     @Resource
-    private RobotBeanHolder robotBeanHolder;
+    private Framework<?> framework;
 
     @Resource
     private ItemService itemService;

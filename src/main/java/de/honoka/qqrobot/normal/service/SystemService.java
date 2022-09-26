@@ -1,7 +1,6 @@
 package de.honoka.qqrobot.normal.service;
 
 import de.honoka.qqrobot.framework.Framework;
-import de.honoka.qqrobot.starter.component.RobotAttributes;
 import de.honoka.sdk.util.file.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,15 +15,19 @@ import javax.persistence.EntityManagerFactory;
 @Service
 public class SystemService {
 
+    //region components
+
+    @Resource
+    private EntityManagerFactory entityManagerFactory;
+
+    @Resource
+    private Framework<?> framework;
+
+    //endregion
+
     //机器人全局初始化方法，在Spring框架加载完成后，机器人启动前执行
     public void init() {
-        //不重要的初始化操作可以放入新线程中处理，以免减缓程序加载
-        new Thread(() -> {
-            //none
-        }).start();
         framework.boot();
-        //开启消息处理开关
-        attributes.isEnabled = true;
         log.info("classpath: "  + FileUtils.getClasspath());
         log.info("file.encoding: " + System.getProperty("file.encoding") +
                 "\nsun.jnu.encoding: " + System.getProperty("sun.jnu.encoding"));
@@ -35,13 +38,4 @@ public class SystemService {
         framework.stop();
         entityManagerFactory.close();
     }
-
-    @Resource
-    private EntityManagerFactory entityManagerFactory;
-
-    @Resource
-    private RobotAttributes attributes;
-
-    @Resource
-    private Framework<?> framework;
 }

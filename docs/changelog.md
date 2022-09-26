@@ -1,5 +1,8 @@
 # 更新日志
 
+## 4.0.1
+- 适配新版honoka-utils和qqrobot-spring-boot-starter。
+
 ## 4.0.0
 - 使用MyBatis Plus重构持久层，jpa现在仅用于建表。
 - 将道具的匹配逻辑改为注解式。

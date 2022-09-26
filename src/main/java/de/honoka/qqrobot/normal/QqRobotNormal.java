@@ -4,7 +4,7 @@ import de.honoka.qqrobot.framework.Framework;
 import de.honoka.qqrobot.normal.service.SystemService;
 import de.honoka.qqrobot.normal.system.ExtendRobotAttributes;
 import de.honoka.qqrobot.normal.system.SystemComponents;
-import de.honoka.qqrobot.starter.component.RobotAttributes;
+import de.honoka.qqrobot.starter.component.RobotStatus;
 import de.honoka.sdk.util.file.FileUtils;
 import de.honoka.sdk.util.system.gui.ConsoleWindow;
 import org.springframework.boot.SpringApplication;
@@ -32,12 +32,12 @@ public class QqRobotNormal {
         //endregion
         //region 装配组件
         ApplicationContext context = SystemComponents.applicationContext;
-        RobotAttributes attributes = context.getBean(RobotAttributes.class);
-        attributes.consoleWindow = console;
+        RobotStatus status = context.getBean(RobotStatus.class);
+        status.setConsoleWindow(console);
         systemService = context.getBean(SystemService.class);
         systemService.init();
         //添加托盘图标菜单项
-        console.addTrayIconMenuItem("Relogin", true,
+        console.addTrayIconMenuItem("重新登录", true,
                 context.getBean(Framework.class)::reboot);
         //endregion
     }
@@ -48,7 +48,7 @@ public class QqRobotNormal {
 
     public static void checkAndOutputFiles() {
         Class<?> thisClass = QqRobotNormal.class;
-        FileUtils.checkResources(thisClass, "/qqrobot/mirai/" +
+        FileUtils.copyResourceIfNotExists(thisClass, "/qqrobot/mirai/" +
                 "deviceInfo.json");
     }
 }

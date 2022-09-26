@@ -2,6 +2,8 @@ buildscript {
     ext {
         springBootVersion = '2.3.5.RELEASE'
         kotlinVersion = '1.6.21'
+        qqRobotStarterVersion = '1.1.1'
+        honokaUtilsVersion = '1.0.2'
     }
 }
 
@@ -14,7 +16,7 @@ plugins {
 }
 
 group = 'de.honoka.qqrobot'
-version = '4.0.0'
+version = '4.0.1'
 sourceCompatibility = '11'
 
 repositories {
@@ -34,13 +36,14 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.16'
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.3.4'
     //机器人框架
-    implementation 'de.honoka.qqrobot:qqrobot-spring-boot-starter:1.1.0'
+    implementation 'de.honoka.qqrobot:qqrobot-spring-boot-starter:' +
+            "$qqRobotStarterVersion"
     //一些杂项
     implementation 'net.sourceforge.htmlunit:htmlunit:2.36.0'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
-    implementation 'de.honoka.sdk:honoka-utils:1.0.1'
+    implementation "de.honoka.sdk:honoka-utils:$honokaUtilsVersion"
     String lombok = 'org.projectlombok:lombok:1.18.16'
     String springBootConfigurationProcessor = 'org.springframework.boot:' +
             'spring-boot-configuration-processor'
