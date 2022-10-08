@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exe4j version="8.0.1" transformSequenceNumber="3">
+    <application name="qqrobot-normal" distributionSourceDir="." />
+    <executable name="qqrobot-normal" wrapperType="embed" executableDir="." executableMode="gui" singleInstance="true" />
+    <java mainClass="org.springframework.boot.loader.JarLauncher" vmParameters="-classpath &quot;%JAVA_HOME%\jmods&quot; -Dfile.encoding=UTF-8 -Dspring.output.ansi.enabled=always -Dspring.profiles.active=prod" minVersion="11" maxVersion="17">
+        <classPath>
+            <archive location="./qqrobot-normal.jar" failOnError="false" />
+        </classPath>
+    </java>
+</exe4j>
