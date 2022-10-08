@@ -16,3 +16,13 @@
 - 通过任何形式发布衍生项目的可执行程序时，或对衍生项目进行部署，并通过网络提供服务时，必须同时附带或公布衍生项目的源代码。
 
 请参阅：[更新日志](./docs/changelog.md)
+
+## 构建与运行
+
+本项目基于[qqrobot-sdk](https://github.com/kosaka-bun/qqrobot-sdk)开发，请阅读该项目的文档以了解如何构建、运行和部署本项目。
+
+[![qqrobot-sdk](https://github-readme-stats.vercel.app/api/pin/?username=kosaka-bun&repo=qqrobot-sdk)](https://github.com/kosaka-bun/qqrobot-sdk)
+
+### 注意事项
+1. 项目使用MyBatis Plus，SQL方言为MySQL，若需要更换其他数据源，请自行修改[mapper](./src/main/resources/mapper)目录中所有文件中的SQL语句中与其他数据源的SQL方言所不匹配的内容。
+2. 项目使用JPA自动创建数据表格，不需要事先在数据库中创建数据表。
