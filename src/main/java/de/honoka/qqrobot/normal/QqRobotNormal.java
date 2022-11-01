@@ -18,12 +18,17 @@ public class QqRobotNormal {
 
     public static void main(String[] args) {
         //region 初始化窗口与托盘图标
-        ConsoleWindow console = new ConsoleWindow("QQ Robot Normal",
-                null, QqRobotNormal::exit);
-        console.setAutoScroll(true);
-        console.setScreenZoomScale(1.25);
-        ExtendRobotAttributes.consoleWindow = console;
-        console.show();
+        ConsoleWindow console = null;
+        try {
+            console = new ConsoleWindow("QQ Robot Normal", null,
+                    QqRobotNormal::exit);
+            console.setAutoScroll(true);
+            console.setScreenZoomScale(1.25);
+            ExtendRobotAttributes.consoleWindow = console;
+            console.show();
+        } catch(Throwable t) {
+            //ignore
+        }
         //endregion
         //region 构建应用、加载配置、启动应用
         checkAndOutputFiles();
@@ -32,13 +37,19 @@ public class QqRobotNormal {
         //endregion
         //region 装配组件
         ApplicationContext context = SystemComponents.applicationContext;
-        RobotStatus status = context.getBean(RobotStatus.class);
-        status.setConsoleWindow(console);
         systemService = context.getBean(SystemService.class);
         systemService.init();
-        //添加托盘图标菜单项
-        console.addTrayIconMenuItem("重新登录", true,
-                context.getBean(Framework.class)::reboot);
+        try {
+            RobotStatus status = context.getBean(RobotStatus.class);
+            if(console != null) {
+                status.setConsoleWindow(console);
+                //添加托盘图标菜单项
+                console.addTrayIconMenuItem("重新登录", true,
+                        context.getBean(Framework.class)::reboot);
+            }
+        } catch(Throwable t) {
+            //ignore
+        }
         //endregion
     }
 
