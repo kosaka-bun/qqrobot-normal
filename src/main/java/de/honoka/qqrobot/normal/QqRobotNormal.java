@@ -1,60 +1,21 @@
 package de.honoka.qqrobot.normal;
 
-import de.honoka.qqrobot.framework.Framework;
 import de.honoka.qqrobot.normal.service.SystemService;
-import de.honoka.qqrobot.normal.system.ExtendRobotAttributes;
-import de.honoka.qqrobot.normal.system.SystemComponents;
-import de.honoka.qqrobot.starter.component.RobotStatus;
+import de.honoka.qqrobot.starter.component.RobotConsoleWindow;
 import de.honoka.sdk.util.file.FileUtils;
-import de.honoka.sdk.util.system.gui.ConsoleWindow;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class QqRobotNormal {
 
-    private static SystemService systemService;
-
     public static void main(String[] args) {
-        //region 初始化窗口与托盘图标
-        ConsoleWindow console = null;
-        try {
-            console = new ConsoleWindow("QQ Robot Normal", null,
-                    QqRobotNormal::exit);
-            console.setAutoScroll(true);
-            console.setScreenZoomScale(1.25);
-            ExtendRobotAttributes.consoleWindow = console;
-            console.show();
-        } catch(Throwable t) {
-            //ignore
-        }
-        //endregion
-        //region 构建应用、加载配置、启动应用
-        checkAndOutputFiles();
-        SpringApplication app = new SpringApplication(QqRobotNormal.class);
-        app.run(args);
-        //endregion
-        //region 装配组件
-        ApplicationContext context = SystemComponents.applicationContext;
-        systemService = context.getBean(SystemService.class);
-        systemService.init();
-        try {
-            RobotStatus status = context.getBean(RobotStatus.class);
-            if(console != null) {
-                status.setConsoleWindow(console);
-                //添加托盘图标菜单项
-                console.addTrayIconMenuItem("重新登录", true,
-                        context.getBean(Framework.class)::reboot);
-            }
-        } catch(Throwable t) {
-            //ignore
-        }
-        //endregion
-    }
-
-    public static void exit() {
-        systemService.shutdown();
+        RobotConsoleWindow console = RobotConsoleWindow.of("QQ Robot Normal",
+                1.25, QqRobotNormal.class);
+        console.setBeforeRunApplication(QqRobotNormal::checkAndOutputFiles);
+        console.setOnExit(context -> {
+            context.getBean(SystemService.class).shutdown();
+        }).create();
+        console.getContext().getBean(SystemService.class).init();
     }
 
     public static void checkAndOutputFiles() {

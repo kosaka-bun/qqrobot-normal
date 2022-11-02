@@ -2,8 +2,8 @@ buildscript {
     ext {
         springBootVersion = '2.3.5.RELEASE'
         kotlinVersion = '1.6.21'
-        qqRobotStarterVersion = '1.1.1'
-        honokaUtilsVersion = '1.0.2'
+        qqRobotStarterVersion = '1.2.1'
+        honokaUtilsVersion = '1.0.6'
     }
 }
 
@@ -16,7 +16,7 @@ plugins {
 }
 
 group = 'de.honoka.qqrobot'
-version = '4.0.1'
+version = '4.0.2'
 sourceCompatibility = '11'
 
 repositories {

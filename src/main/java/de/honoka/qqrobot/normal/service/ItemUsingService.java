@@ -8,7 +8,7 @@ import de.honoka.qqrobot.normal.entity.ItemRecord;
 import de.honoka.qqrobot.normal.entity.UserStatus;
 import de.honoka.qqrobot.normal.entity.Watering;
 import de.honoka.qqrobot.normal.util.EmojiUtils;
-import de.honoka.sdk.util.code.CodeUtils;
+import de.honoka.sdk.util.code.ActionUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +75,7 @@ public class ItemUsingService {
 
             @Override
             public void run() {
-                CodeUtils.doIgnoreExceptions(() -> {
+                ActionUtils.doIgnoreException(() -> {
                     itemUsingService.onGiftEffect(userStatus);
                 });
                 statusTaskMap.remove(userStatus.getId());
