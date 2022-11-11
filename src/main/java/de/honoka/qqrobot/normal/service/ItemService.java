@@ -7,6 +7,7 @@ import de.honoka.qqrobot.normal.entity.Watering;
 import de.honoka.qqrobot.normal.util.EmojiUtils;
 import de.honoka.qqrobot.starter.RobotBasicProperties;
 import lombok.SneakyThrows;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -256,6 +257,7 @@ public class ItemService {
 
     private final Map<String, Method> itemMethods = new HashMap<>();
 
+    @Lazy
     @Resource
     private ItemUsingService itemUsingService;
 

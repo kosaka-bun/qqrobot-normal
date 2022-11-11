@@ -366,6 +366,7 @@ public class ItemUsingService {
     @Resource
     private Timer timer;
 
+    @Lazy
     @Resource
     private ItemUsingService itemUsingService;
 
