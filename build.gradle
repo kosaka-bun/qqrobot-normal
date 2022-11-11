@@ -1,9 +1,9 @@
 buildscript {
     ext {
-        springBootVersion = '2.3.5.RELEASE'
-        kotlinVersion = '1.6.21'
-        qqRobotStarterVersion = '1.2.2-dev'
-        honokaUtilsVersion = '1.0.6'
+        springBootVersion = '2.7.5'
+        kotlinVersion = '1.7.20'
+        qqRobotStarterVersion = '1.2.3-dev'
+        honokaUtilsVersion = '1.0.7'
     }
 }
 

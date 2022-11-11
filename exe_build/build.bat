@@ -3,12 +3,11 @@ set PROJECT_NAME="qqrobot-normal"
 
 :: 清理输出目录
 cd ..
-del /s /q .\build\libs\*
-for /r .\build\libs /d %%a in (*) do rmdir /s /q "%%a"
+rmdir /s /q .\build
 
 :: 构建
 call gradlew bootJar
-cd compile
+cd exe_build
 
 copy "%PROJECT_NAME%.exe4j" ..\build\libs\
 cd ..\build\libs
