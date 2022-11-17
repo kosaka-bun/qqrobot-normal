@@ -1,5 +1,8 @@
 # 更新日志
 
+## 4.0.3
+- 适配qqrobot-spring-boot-starter 1.3.1。
+
 ## 4.0.2
 - 适配honoka-utils 1.0.6。
 - 适配qqrobot-spring-boot-starter 1.2.1。

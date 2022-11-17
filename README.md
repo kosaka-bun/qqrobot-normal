@@ -1,7 +1,7 @@
 # QQ Robot Normal
 ![Java](./docs/img/Java-11-brightgreen.svg)
 ![Kotlin](https://img.shields.io/badge/Kotlin-1.6.21-brightgreen?logo=Kotlin)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.3.5.RELEASE-brightgreen?logo=Spring)<br />
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7.5-brightgreen?logo=Spring)<br />
 [![License](https://img.shields.io/github/license/kosaka-bun/qqrobot-normal?label=License&color=blue&logo=GitHub)](./LICENSE)
 ![GitHub Stars](https://img.shields.io/github/stars/kosaka-bun/qqrobot-normal?label=Stars&logo=GitHub)
 [![Release](https://img.shields.io/github/release/kosaka-bun/qqrobot-normal?label=Release&logo=GitHub)](../../releases)
